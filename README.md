@@ -8,17 +8,25 @@ For libraries like Material, it supports multiple themes with `mixin`. Hence, th
 
 Meanwhile, for some libraries, which do not support `mixin`, by importing the entire styles, this strategy prevents us from hosting multiple themes side-by-side. Hence, I try 2 approaches
 
-Class binding
+1. Class binding
 ``` html
 <h2 [class]="styleClass">This is a content styled with [class] binding</h2>
+
+<button (click)="setStaticClass('static-blue')">Set [class]="static-blue"</button>
+<button (click)="setStaticClass('static-red')">Set [class]="static-red"</button>
+<button (click)="setStaticClass('')">Clear [class]</button>
 ```
 
-Set fixed class to the component and bind the href of a HTMLLinkElement at runtime
+2. Set fixed class to the component and bind the href of a HTMLLinkElement at runtime
 ``` html
 <h2 class="theme-text">This content has fixed "theme-text" style</h2>
+
+<button (click)="setScriptElement('compiled-theme-yellow')">Inject theme yellow script</button>
+<button (click)="setScriptElement('compiled-theme-green')">Inject theme green script</button>
+<button (click)="setScriptElement('')">Clear theme script</button>
 ```
 
-My strategy is as below
+My strategy is as below.
 ``` ts
 export class AppComponent {
   styleClass: string;
@@ -41,9 +49,38 @@ export class AppComponent {
 }
 ```
 
+Where the main `styles.bundle.css` contains `static-blue` and `static-red` loaded by default.
+``` css
+.static-blue {
+  color: #00f
+}
+
+.static-red {
+  color: red
+}
+```
+
+But there are also 2 more css styles which are loaded on demand and can be unloaded at any time.
+
+``` css
+// compiled-theme-green
+.theme-text {
+    color: green;
+}
+```
+
+``` css
+// compiled-theme-yellow
+.theme-text {
+    color: yellow;
+}
+```
+
 ## Development
 
-Run `ng serve` for a dev server
+Run `ng serve` for a dev server but this will fail for the lazy style loading approach (approach 2). 
+
+We should run `ng serve --extract-css` to ensure the compiled style bundles exist in `dist` directory not in-memory.
 
 ## Build
 
