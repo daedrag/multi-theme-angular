@@ -19,7 +19,17 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        {
+          "input": "themes/theme-yellow.scss",
+          "output": "compiled-theme-yellow.css",
+          "lazy": true
+        },
+        {
+          "input": "themes/theme-green.scss",
+          "output": "compiled-theme-green.css",
+          "lazy": true
+        }
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

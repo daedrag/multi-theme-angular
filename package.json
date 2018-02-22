@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod --aot",
+    "postbuild": "node ./lazy-style-correction.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -26,7 +27,7 @@
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
-    "@angular/cli": "1.6.4",
+    "@angular/cli": "^1.7.1",
     "@angular/compiler-cli": "^5.1.0",
     "@angular/language-service": "^5.1.0",
     "@types/jasmine": "~2.8.3",
